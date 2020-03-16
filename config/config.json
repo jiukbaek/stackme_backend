@@ -1,0 +1,18 @@
+{
+  "dev": {
+    "username": "root",
+    "password": "root",
+    "database": "stackme_dev",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "root",
+    "database": "stackme_dev",
+    "host": "127.0.0.1",
+    "port": "3306",
+    "dialect": "mysql"
+  }
+}
