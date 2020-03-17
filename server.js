@@ -8,6 +8,7 @@ import passport from "./utils/passport";
 import userRouter from "./src/api/user";
 import authRouter from "./src/api/auth";
 import projectRouter from "./src/api/project";
+import careerRouter from "./src/api/career";
 
 import User from "./models/User";
 
@@ -25,18 +26,21 @@ const server = express();
 
 server.use(express.json());
 server.use("/public", express.static(path.join(__dirname, "public")));
+server.use("/api/auth", cors(), authRouter);
 server.use(
-  "/api/auth",
-  cors(),
+  "/api/user",
   passport.authenticate("jwt", { session: false }),
-  authRouter
+  userRouter
 );
-server.use("/api/user", cors(), userRouter);
 server.use(
   "/api/project",
-  cors(),
   passport.authenticate("jwt", { session: false }),
   projectRouter
+);
+server.use(
+  "/api/career",
+  passport.authenticate("jwt", { session: false }),
+  careerRouter
 );
 server.post("/uploads/images", uploader.single("upload"), (req, res) => {
   console.log(req.file);
@@ -64,7 +68,8 @@ if (process.env.NODE_ENV !== "test") {
           password: "test1234",
           name: "백지욱",
           birth: "1994-02-05",
-          api_key: ""
+          api_key: "",
+          auth: 1
         },
         {}
       );

@@ -10,7 +10,7 @@ export default class Project extends Model {
           primaryKey: true,
           allowNull: false
         },
-        userId: {
+        user_id: {
           type: DataTypes.INTEGER.UNSIGNED,
           allowNull: false
         },
@@ -27,7 +27,7 @@ export default class Project extends Model {
           allowNull: false
         },
         skills: {
-          type: DataTypes.TEXT,
+          type: DataTypes.STRING(1000),
           allowNull: false
         },
         url: {
@@ -37,6 +37,10 @@ export default class Project extends Model {
         github: {
           type: DataTypes.STRING(100),
           allowNull: true
+        },
+        showing: {
+          type: DataTypes.BOOLEAN,
+          allowNull: false
         }
       },
       {

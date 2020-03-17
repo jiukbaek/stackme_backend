@@ -9,8 +9,14 @@ const option = {
 
 const verifyUser = async (payload, done) => {
   try {
-    const user = await User.findOne({ where: { id: payload.userId } });
-    if (user) {
+    const result = await User.findOne({ where: { id: payload.userId } });
+    if (result) {
+      const user = {
+        id: result.id,
+        email: result.email,
+        name: result.name,
+        auth: result.auth
+      };
       return done(null, user);
     } else {
       return done(null, false);

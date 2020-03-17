@@ -1,29 +1,30 @@
 import express from "express";
 import User from "../../models/User";
 import jwt from "jsonwebtoken";
+import status from "../../utils/statusStr";
 
 const Router = express.Router();
 
 Router.get("/", (req, res) => {
-  res.status(200).json({ result: true });
+  res.status(404).json({ msg: status.INVALIDREQ });
 });
 
 Router.post("/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email);
   const user = await User.findOne({ where: { email } });
+
   if (user) {
     if (user.validPassword(password)) {
       const token = jwt.sign(
-        { userId: user.id, userEmail: user.email },
+        { user_id: user.id },
         process.env.SECRET || "secret"
       );
-      return res.json({ msg: "login", token });
+      return res.status(200).json({ token });
     } else {
-      return res.json({ msg: "Invalid Password" });
+      return res.status(401).json({ msg: status.UNAUTH });
     }
   } else {
-    return res.json({ msg: "No User" });
+    return res.status(404).json({ msg: status.NODATA });
   }
 });
 

@@ -8,3 +8,7 @@ export const makeHash = password => {
 
   return hash;
 };
+
+export const compareId = (targetId, requestId) => {
+  return targetId === requestId;
+};

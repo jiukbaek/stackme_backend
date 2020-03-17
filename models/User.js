@@ -23,7 +23,11 @@ export default class User extends Model {
         },
         name: { type: DataTypes.STRING(50), allowNull: false },
         birth: { type: DataTypes.STRING(20), allowNull: false },
-        api_key: { type: DataTypes.STRING(500), allowNull: false }
+        api_key: { type: DataTypes.STRING(500), allowNull: false },
+        auth: {
+          type: DataTypes.INTEGER.UNSIGNED,
+          allowNull: false
+        }
       },
       {
         sequelize,

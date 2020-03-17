@@ -1,5 +1,5 @@
 import express from "express";
-import Project from "../../models/Project";
+import Career from "../../models/Career";
 import { compareId } from "../../utils/utils";
 import status from "../../utils/statusStr";
 
@@ -8,19 +8,23 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const { user_id } = req.user;
 
-  const projects = await Project.findAll({ where: { user_id } });
+  const careers = await Career.findAll({ where: { user_id } });
 
-  return res.status(200).json({ data: projects });
+  if (careers) {
+    return res.status(200).json({ data: careers });
+  } else {
+    return res.status(404).json({ msg: status.NODATA });
+  }
 });
 
 router.get("/:id", async (req, res) => {
   const { user_id } = req.user;
   const { id } = req.params;
-  const project = await Project.findOne({ where: { id } });
+  const career = await Career.findOne({ where: { id } });
 
-  if (project) {
-    if (project.showing || compareId(project.user_id, user_id)) {
-      return res.status(200).json({ data: project });
+  if (career) {
+    if (compareId(career.user_id, user_id)) {
+      return res.status(200).json({ data: career });
     } else {
       return res.status(403).json({ msg: status.UNAUTH });
     }
@@ -31,43 +35,36 @@ router.get("/:id", async (req, res) => {
 
 router.post("/", async (req, res) => {
   const { user_id } = req.user;
-
   const {
-    type = null,
-    title = null,
-    content = null,
-    skills = null,
-    url = null,
-    github = null,
-    showing = null
+    join_date = null,
+    end_date = null,
+    company = null,
+    duty = null
   } = req.body;
 
-  if (!type || !title || !content || !skills)
-    return res.json({ msg: "Invalid Data" });
+  if (!join_date || !company || !duty)
+    return res.status(404).json({ msg: status.INVALIDREQ });
 
-  const project = await Project.create({
+  const career = await Career.create({
     user_id,
-    type,
-    title,
-    content,
-    skills,
-    url,
-    github,
-    showing
+    join_date,
+    end_date,
+    company,
+    duty
   });
 
-  return res.status(200).json({ data: project });
+  return res.status(200).json({ data: career });
 });
 
 router.patch("/:id", async (req, res) => {
   const { user_id } = req.user;
   const { id } = req.params;
-  const project = await Project(findOne({ where: { id } }));
+  const career = await Career.findOne({ where: { id } });
   const values = req.body;
 
-  if (project) {
-    if (compareId(project.user_id, user_id)) {
-      const updated = await project.update({ ...values });
+  if (career) {
+    if (compareId(career.user_id, user_id)) {
+      const updated = await career.update({ ...values });
       return res.status(200).json({ data: updated });
     } else {
       return res.status(403).json({ msg: status.UNAUTH });
@@ -80,11 +77,11 @@ router.patch("/:id", async (req, res) => {
 router.delete("/:id", async (req, res) => {
   const { user_id } = req.user;
   const { id } = req.params;
-  const project = await Project.findOne({ where: { id } });
+  const career = await Career.findOne({ where: { id } });
 
-  if (project) {
-    if (compareId(project.user_id, user_id)) {
-      const deleted = await project.destroy();
+  if (career) {
+    if (compareId(career.user_id, user_id)) {
+      const deleted = await career.destroy();
       return res.status(200).json({ data: deleted });
     } else {
       return res.status(403).json({ msg: status.UNAUTH });

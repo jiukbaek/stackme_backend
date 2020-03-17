@@ -2,6 +2,8 @@ import { Sequelize } from "sequelize";
 import config from "../config/config.json";
 import User from "./User";
 import Project from "./Project";
+import Career from "./Career";
+import Skills from "./Skills";
 require("dotenv").config();
 
 export const init = () => {
@@ -20,9 +22,17 @@ export const init = () => {
 
   User.init(sequelize);
   Project.init(sequelize);
+  Career.init(sequelize);
+  Skills.init(sequelize);
 
   User.hasMany(Project, {
-    foreignKey: "userId"
+    foreignKey: "user_id",
+    onDelete: "CASCADE"
+  });
+
+  User.hasMany(Career, {
+    foreignKey: "user_id",
+    onDelete: "CASCADE"
   });
 
   return sequelize;
