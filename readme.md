@@ -8,4 +8,4 @@
 개인의 경력, 프로젝트는 API를 통하여 다른 웹 서비스 개발 시 이용 가능.
 
 Stack Me ERD 구성도
-!(./gitimage/erd.png)
+![DB ERD](./gitimage/erd.png)
