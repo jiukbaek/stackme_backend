@@ -12,7 +12,7 @@ const verifyUser = async (payload, done) => {
     const result = await User.findOne({ where: { id: payload.userId } });
     if (result) {
       const user = {
-        id: result.id,
+        user_id: result.id,
         email: result.email,
         name: result.name,
         auth: result.auth

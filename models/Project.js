@@ -34,13 +34,21 @@ export default class Project extends Model {
           type: DataTypes.STRING(100),
           allowNull: true
         },
-        github: {
+        git_url: {
           type: DataTypes.STRING(100),
           allowNull: true
         },
         showing: {
           type: DataTypes.BOOLEAN,
           allowNull: false
+        },
+        start_date: {
+          type: DataTypes.DATEONLY,
+          allowNull: false
+        },
+        end_date: {
+          type: DataTypes.DATEONLY,
+          allowNull: true
         }
       },
       {

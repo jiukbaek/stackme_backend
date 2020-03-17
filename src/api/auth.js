@@ -28,4 +28,14 @@ Router.post("/login", async (req, res) => {
   }
 });
 
+Router.post("/signup", async (req, res) => {
+  const { email = null, password = null, name = null, birth = null } = req.body;
+  if (!email || !password || !name || !birth)
+    return res.json({ msg: status.INVALIDREQ });
+
+  const user = await User.create({ email, password, name, birth });
+
+  return res.status(200).json({ data: user });
+});
+
 export default Router;

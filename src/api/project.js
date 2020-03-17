@@ -38,8 +38,10 @@ router.post("/", async (req, res) => {
     content = null,
     skills = null,
     url = null,
-    github = null,
-    showing = null
+    git_url = null,
+    showing = null,
+    start_date = null,
+    end_date = null
   } = req.body;
 
   if (!type || !title || !content || !skills)
@@ -52,8 +54,10 @@ router.post("/", async (req, res) => {
     content,
     skills,
     url,
-    github,
-    showing
+    git_url,
+    showing,
+    start_date,
+    end_date
   });
 
   return res.status(200).json({ data: project });

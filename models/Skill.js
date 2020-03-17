@@ -1,6 +1,6 @@
 import { Model, DataTypes } from "sequelize";
 
-export default class Skills extends Model {
+export default class Skill extends Model {
   static init(sequelize) {
     super.init(
       {

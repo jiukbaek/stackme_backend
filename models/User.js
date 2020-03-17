@@ -1,5 +1,5 @@
 import { Model, DataTypes } from "sequelize";
-import { makeHash } from "../utils/utils";
+import { makeHash, genApiKey } from "../utils/utils";
 import bcrypt from "bcrypt";
 
 export default class User extends Model {
@@ -23,10 +23,14 @@ export default class User extends Model {
         },
         name: { type: DataTypes.STRING(50), allowNull: false },
         birth: { type: DataTypes.STRING(20), allowNull: false },
-        api_key: { type: DataTypes.STRING(500), allowNull: false },
+        api_key: { type: DataTypes.STRING(500), allowNull: true },
         auth: {
           type: DataTypes.INTEGER.UNSIGNED,
           allowNull: false
+        },
+        git_url: {
+          type: DataTypes.STRING(100),
+          allowNull: true
         }
       },
       {
@@ -36,6 +40,7 @@ export default class User extends Model {
         hooks: {
           beforeCreate: user => {
             user.password = makeHash(user.password);
+            user.api_key = genApiKey();
           }
         }
       }
