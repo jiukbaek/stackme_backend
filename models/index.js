@@ -25,12 +25,17 @@ export const init = () => {
   Career.init(sequelize);
   Skill.init(sequelize);
 
-  User.hasMany(Project, {
+  Project.belongsTo(User, {
     foreignKey: "user_id",
     onDelete: "CASCADE"
   });
 
-  User.hasMany(Career, {
+  // User.hasMany(Project, {
+  //   foreignKey: "user_id",
+  //   onDelete: "CASCADE"
+  // });
+
+  Career.belongsTo(User, {
     foreignKey: "user_id",
     onDelete: "CASCADE"
   });

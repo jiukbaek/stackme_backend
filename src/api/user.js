@@ -20,7 +20,18 @@ router.get(
     const user = await User.findOne({ where: { id } });
 
     if (user) {
-      if (compareId(id, user_id)) return res.status(200).json({ data: user });
+      if (compareId(id, user_id))
+        return res.status(200).json({
+          data: {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            birth: user.birth,
+            api_key: user.api_key,
+            auth: user.auth,
+            git_url: user.git_url
+          }
+        });
       else return res.status(401).json({ msg: status.UNAUTH });
     } else {
       return res.status(404).json({ msg: status.NODATA });
@@ -56,7 +67,18 @@ router.patch(
     if (user) {
       if (compareId(user.id, user_id)) {
         const updated = await user.update({ ...values });
-        return res.status(200).json({ data: updated });
+        return res.status(200).json({
+          data: {
+            id: updated.id,
+            email: updated.email,
+            name: updated.name,
+            birth: updated.birth,
+            api_key: updated.api_key,
+            auth: updated.auth,
+            git_url: updated.git_url
+          }
+        });
+        //return res.status(200).json({ data: updated });
       } else {
         return res.status(401).json({ data: status.UNAUTH });
       }

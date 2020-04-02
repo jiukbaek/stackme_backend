@@ -7,13 +7,16 @@ import { setRouter } from "./src/";
 
 import User from "./models/User";
 import Skill from "./models/Skill";
+import Project from "./models/Project";
+import Career from "./models/Career";
 
 const _storage = multer.diskStorage({
   destination: function(req, file, cb) {
-    cb(null, "public/uploads");
+    cb(null, "public/imageTemp");
   },
   filename: function(req, file, cb) {
-    cb(null, file.originalname);
+    const { user } = req.query;
+    cb(null, `${user}_${Date.now()}_${file.originalname}`);
   }
 });
 const uploader = multer({ storage: _storage });
@@ -24,7 +27,6 @@ server.use(express.json());
 setRouter(server);
 server.use("/public", express.static(path.join(__dirname, "public")));
 server.post("/uploads/images", uploader.single("upload"), (req, res) => {
-  console.log(req.file);
   return res.json({
     uploaded: 1,
     fileName: req.file.filename,
@@ -60,6 +62,87 @@ if (process.env.NODE_ENV !== "test") {
       await Skill.create({ id: null, skill: "Mysql" });
       await Skill.create({ id: null, skill: "Mongo" });
       await Skill.create({ id: null, skill: "AWS EC2" });
+
+      await Career.create({
+        id: null,
+        user_id: 1,
+        company: "꿈의 직장",
+        join_date: "2019-01-01",
+        duty: "웹 개발자"
+      });
+
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle1",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "api.png",
+        showing: true,
+        start_date: "2010-12-01"
+      });
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle2",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "2.png",
+        showing: true,
+        start_date: "2010-12-01"
+      });
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle3",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "3.jpg",
+        showing: true,
+        start_date: "2010-12-01"
+      });
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle4",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "4.jpg",
+        showing: true,
+        start_date: "2010-12-01"
+      });
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle5",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "api.png",
+        showing: true,
+        start_date: "2010-12-01"
+      });
+      await Project.create({
+        user_id: "1",
+        type: "1",
+        title: "testTitle6",
+        content: "test",
+        skills: "react,javscript",
+        url: "url.com",
+        github: "github",
+        thumnail: "api.png",
+        showing: true,
+        start_date: "2010-12-01"
+      });
     })();
   } catch (e) {
     console.log(e);

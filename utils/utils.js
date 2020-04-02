@@ -1,4 +1,6 @@
 import bcrypt from "bcrypt";
+import sharp from "sharp";
+import fs from "fs";
 
 export const makeHash = password => {
   if (!password) return false;
@@ -22,4 +24,44 @@ export const genApiKey = () => {
     apiKey += characters.charAt(Math.floor(Math.random() * charactersLength));
   }
   return apiKey;
+};
+
+export const makeThumnail = (images, id) => {
+  if (!images) return "default.png";
+
+  const useImage = images[0];
+  const ext = useImage.substring(useImage.lastIndexOf("."), useImage.length);
+  const thumPath = `public/thumnail/${id}${ext}`;
+
+  fs.copyFileSync(useImage, thumPath);
+  sharp(useImage)
+    .resize({ width: 300 })
+    .toFile(thumPath);
+  return `${id}${ext}`;
+};
+
+export const getProjectImages = content => {
+  return content.match(/src=".+?"/g);
+};
+
+export const replaceProjectImages = content => {
+  return content.replace(`src="public/imageTemp`, `src="public/projectImage`);
+};
+
+export const setProjectImage = images => {
+  if (!images) return;
+
+  const replaceImages = images.map(image =>
+    image.replace(/src=/gi, "").replace(/"/gi, "")
+  );
+
+  const setImages = [];
+
+  replaceImages.forEach(image => {
+    const movedPath = image.replace("public/imageTemp", "public/projectImage");
+    fs.renameSync(image, movedPath);
+    setImages.push(movedPath);
+  });
+
+  return setImages;
 };

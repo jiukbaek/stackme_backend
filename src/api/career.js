@@ -8,7 +8,10 @@ const router = express.Router();
 router.get("/", async (req, res) => {
   const { user_id } = req.user;
 
-  const careers = await Career.findAll({ where: { user_id } });
+  const careers = await Career.findAll({
+    where: { user_id },
+    order: [["id", "DESC"]]
+  });
 
   if (careers) {
     return res.status(200).json({ data: careers });
@@ -41,7 +44,7 @@ router.post("/", async (req, res) => {
     company = null,
     duty = null
   } = req.body;
-
+  console.log(req.body);
   if (!join_date || !company || !duty)
     return res.status(404).json({ msg: status.INVALIDREQ });
 

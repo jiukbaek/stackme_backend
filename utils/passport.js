@@ -9,7 +9,7 @@ const option = {
 
 const verifyUser = async (payload, done) => {
   try {
-    const result = await User.findOne({ where: { id: payload.userId } });
+    const result = await User.findOne({ where: { id: payload.user_id } });
     if (result) {
       const user = {
         user_id: result.id,

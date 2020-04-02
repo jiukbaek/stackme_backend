@@ -10,16 +10,17 @@ Router.get("/", (req, res) => {
 });
 
 Router.post("/login", async (req, res) => {
+  console.log(req.body);
   const { email, password } = req.body;
   const user = await User.findOne({ where: { email } });
 
   if (user) {
     if (user.validPassword(password)) {
       const token = jwt.sign(
-        { user_id: user.id },
+        { user_id: user.id, user_name: user.name, user_email: user.email },
         process.env.SECRET || "secret"
       );
-      return res.status(200).json({ token });
+      return res.status(200).json({ token, user });
     } else {
       return res.status(401).json({ msg: status.UNAUTH });
     }

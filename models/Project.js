@@ -18,6 +18,10 @@ export default class Project extends Model {
           type: DataTypes.STRING(100),
           allowNull: false
         },
+        thumnail: {
+          type: DataTypes.STRING(100),
+          allowNull: true
+        },
         title: {
           type: DataTypes.STRING(100),
           allowNull: false
