@@ -43,7 +43,7 @@ export default class Project extends Model {
           allowNull: true
         },
         showing: {
-          type: DataTypes.BOOLEAN,
+          type: DataTypes.STRING(2),
           allowNull: false
         },
         start_date: {

@@ -65,3 +65,14 @@ export const setProjectImage = images => {
 
   return setImages;
 };
+
+export const genPagination = (page, perPage, totalCount) => {
+  if (totalCount === 0) return false;
+  const groupPerPage = 5;
+  const totalPage =
+    totalCount % perPage > 0 ? totalCount / perPage + 1 : totalCount / perPage;
+  const totalGroup =
+    totalPage % groupPerPage > 0
+      ? totalPage / groupPerPage + 1
+      : totalPage / groupPerPage;
+};

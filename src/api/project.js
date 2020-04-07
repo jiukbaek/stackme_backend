@@ -20,11 +20,14 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { user_id } = req.user;
+    const { page = 1, perPage = 10, q = "" } = req.query;
+
     const projects = await Project.findAll({
       where: { user_id },
       include: [{ model: User, attributes: ["name"] }]
     });
 
+    res.setHeader("test", "30");
     return res.status(200).json({ data: projects });
   }
 );
@@ -32,6 +35,9 @@ router.get(
 router.get("/random", async (req, res) => {
   const { number = 10 } = req.query;
   const projects = await Project.findAll({
+    where: {
+      showing: "Y"
+    },
     order: [[Sequelize.fn("RAND")]],
     limit: parseInt(number)
   });
@@ -51,11 +57,11 @@ router.get(
     const { id } = req.params;
     const project = await Project.findOne({
       where: { id },
-      include: [{ model: users, attributes: ["name"] }]
+      include: [{ model: User, attributes: ["name"] }]
     });
 
     if (project) {
-      if (project.showing || compareId(project.user_id, user_id)) {
+      if (project.showing === "Y" || compareId(project.user_id, user_id)) {
         return res.status(200).json({ data: project });
       } else {
         return res.status(403).json({ msg: status.UNAUTH });
@@ -115,11 +121,18 @@ router.patch(
   async (req, res) => {
     const { user_id } = req.user;
     const { id } = req.params;
-    const project = await Project(findOne({ where: { id } }));
+    const project = await Project.findOne({ where: { id } });
     const values = req.body;
 
     if (project) {
       if (compareId(project.user_id, user_id)) {
+        //content 내용이 바뀔 시
+        if (project.content !== values.content) {
+          const images = getProjectImages(values.content);
+          const replacedContent = replaceProjectImages(values.content);
+          values.content = replacedContent;
+          setProjectImage(images);
+        }
         const updated = await project.update({ ...values });
         return res.status(200).json({ data: updated });
       } else {
