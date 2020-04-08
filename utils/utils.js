@@ -67,12 +67,38 @@ export const setProjectImage = images => {
 };
 
 export const genPagination = (page, perPage, totalCount) => {
-  if (totalCount === 0) return false;
+  if (totalCount === 0) return null;
+
   const groupPerPage = 5;
+
+  const startRowNum = (page - 1) * perPage + 1;
+  const endRowNum = page * perPage > totalCount ? totalCount : page * perPage;
+
   const totalPage =
-    totalCount % perPage > 0 ? totalCount / perPage + 1 : totalCount / perPage;
-  const totalGroup =
-    totalPage % groupPerPage > 0
-      ? totalPage / groupPerPage + 1
-      : totalPage / groupPerPage;
+    totalCount % perPage > 0
+      ? parseInt(totalCount / perPage) + 1
+      : parseInt(totalCount / perPage);
+  // const totalGroup =
+  //   totalPage % groupPerPage > 0
+  //     ? totalPage / groupPerPage + 1
+  //     : totalPage / groupPerPage;
+  const nowPageGroup =
+    page % groupPerPage > 0
+      ? parseInt(page / groupPerPage) + 1
+      : parseInt(page / groupPerPage);
+
+  const nowGroupStartPage = (nowPageGroup - 1) * groupPerPage + 1;
+  const nowGroupEndPage =
+    nowPageGroup * groupPerPage > totalPage
+      ? totalPage
+      : nowPageGroup * groupPerPage;
+
+  return {
+    startRowNum,
+    endRowNum,
+    page,
+    totalPage,
+    nowGroupStartPage,
+    nowGroupEndPage
+  };
 };

@@ -6,7 +6,8 @@ import {
   getProjectImages,
   setProjectImage,
   makeThumnail,
-  replaceProjectImages
+  replaceProjectImages,
+  genPagination
 } from "../../utils/utils";
 import passport from "../../utils/passport";
 import status from "../../utils/statusStr";
@@ -27,8 +28,15 @@ router.get(
       include: [{ model: User, attributes: ["name"] }]
     });
 
-    res.setHeader("test", "30");
-    return res.status(200).json({ data: projects });
+    const pagenation = genPagination(page, perPage, projects.length);
+
+    if (projects.length < 1)
+      return res.status(404).json({ msg: status.NODATA });
+
+    return res.status(200).json({
+      data: projects.slice(pagenation.startRowNum, pagenation.endRowNum),
+      pagenation
+    });
   }
 );
 
