@@ -11,7 +11,7 @@ import {
 } from "../../utils/utils";
 import passport from "../../utils/passport";
 import status from "../../utils/statusStr";
-import Sequelize from "sequelize";
+import Sequelize, { Op } from "sequelize";
 import cors from "cors";
 
 const router = express.Router();
@@ -21,10 +21,43 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { user_id } = req.user;
-    const { page = 1, perPage = 10, q = "" } = req.query;
+    const {
+      page = 1,
+      perPage = 10,
+      q = "",
+      skills = "",
+      showing = false
+    } = req.query;
+
+    console.log(showing);
+
+    const where = {};
+
+    if (skills) {
+      const skillsArr = skills.split(",");
+      const skillsOption = [];
+
+      for (let i = 0; i < skillsArr.length; i++) {
+        skillsOption.push(
+          Sequelize.where(
+            Sequelize.fn("find_in_set", skillsArr[i], Sequelize.col("skills")),
+            ">",
+            0
+          )
+        );
+      }
+      where[Op.or] = skillsOption;
+    }
+
+    if (q) {
+      where["title"] = { [Op.like]: `%${q}%` };
+    }
+
+    if (!showing) where["user_id"] = user_id;
+    else where["showing"] = "Y";
 
     const projects = await Project.findAll({
-      where: { user_id },
+      where,
       include: [{ model: User, attributes: ["name"] }]
     });
 
@@ -34,7 +67,7 @@ router.get(
       return res.status(404).json({ msg: status.NODATA });
 
     return res.status(200).json({
-      data: projects.slice(pagenation.startRowNum, pagenation.endRowNum),
+      data: projects.slice(pagenation.startRowNum - 1, pagenation.endRowNum),
       pagenation
     });
   }

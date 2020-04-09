@@ -89,7 +89,7 @@ export const genPagination = (page, perPage, totalCount) => {
 
   const nowGroupStartPage = (nowPageGroup - 1) * groupPerPage + 1;
   const nowGroupEndPage =
-    nowPageGroup * groupPerPage > totalPage
+    nowPageGroup * groupPerPage >= totalPage
       ? totalPage
       : nowPageGroup * groupPerPage;
 
