@@ -11,13 +11,13 @@ import Project from "./models/Project";
 import Career from "./models/Career";
 
 const _storage = multer.diskStorage({
-  destination: function(req, file, cb) {
+  destination: function (req, file, cb) {
     cb(null, "public/imageTemp");
   },
-  filename: function(req, file, cb) {
+  filename: function (req, file, cb) {
     const { user } = req.query;
     cb(null, `${user}_${Date.now()}_${file.originalname}`);
-  }
+  },
 });
 const uploader = multer({ storage: _storage });
 
@@ -30,7 +30,7 @@ server.post("/uploads/images", uploader.single("upload"), (req, res) => {
   return res.json({
     uploaded: 1,
     fileName: req.file.filename,
-    url: req.file.path
+    url: req.file.path,
   });
 });
 
@@ -42,7 +42,7 @@ if (process.env.NODE_ENV !== "test") {
   //   (async () => {
   //     await sequelize.authenticate();
   //     await sequelize.sync({
-  //       force: true
+  //       force: true,
   //     });
   //     const user = await User.create({
   //       id: null,
@@ -51,7 +51,7 @@ if (process.env.NODE_ENV !== "test") {
   //       name: "백지욱",
   //       birth: "1994-02-05",
   //       api_key: "",
-  //       auth: 1
+  //       auth: 1,
   //     });
 
   //     await Skill.create({ id: null, skill: "Javascript" });
@@ -68,7 +68,7 @@ if (process.env.NODE_ENV !== "test") {
   //       user_id: 1,
   //       company: "꿈의 직장",
   //       join_date: "2019-01-01",
-  //       duty: "웹 개발자"
+  //       duty: "웹 개발자",
   //     });
 
   //     await Project.create({
@@ -81,7 +81,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "N",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -93,7 +93,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "2.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -105,7 +105,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "3.jpg",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -117,7 +117,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "4.jpg",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -129,7 +129,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -141,7 +141,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -153,7 +153,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
 
   //     await Project.create({
@@ -166,7 +166,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -178,7 +178,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -190,7 +190,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -202,7 +202,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -214,7 +214,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -226,7 +226,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -238,7 +238,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -250,7 +250,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -262,7 +262,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -274,7 +274,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -286,7 +286,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -298,7 +298,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -310,7 +310,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -322,7 +322,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -334,7 +334,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -346,7 +346,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -358,7 +358,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -370,7 +370,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -382,7 +382,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -394,7 +394,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -406,7 +406,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -418,7 +418,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -430,7 +430,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -442,7 +442,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -454,7 +454,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -466,7 +466,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -478,7 +478,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -490,7 +490,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -502,7 +502,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -514,7 +514,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -526,7 +526,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -538,7 +538,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -550,7 +550,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -562,7 +562,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -574,7 +574,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -586,7 +586,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -598,7 +598,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -610,7 +610,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -622,7 +622,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -634,7 +634,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -646,7 +646,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -658,7 +658,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -670,7 +670,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -682,7 +682,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -694,7 +694,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -706,7 +706,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -718,7 +718,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -730,7 +730,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -742,7 +742,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -754,7 +754,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -766,7 +766,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -778,7 +778,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -790,7 +790,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -802,7 +802,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -814,7 +814,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -826,7 +826,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -838,7 +838,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -850,7 +850,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -862,7 +862,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -874,7 +874,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -886,7 +886,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -898,7 +898,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -910,7 +910,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //     await Project.create({
   //       user_id: "1",
@@ -922,7 +922,7 @@ if (process.env.NODE_ENV !== "test") {
   //       github: "github",
   //       thumnail: "api.png",
   //       showing: "Y",
-  //       start_date: "2010-12-01"
+  //       start_date: "2010-12-01",
   //     });
   //   })();
   // } catch (e) {

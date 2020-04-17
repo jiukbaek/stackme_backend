@@ -29,8 +29,8 @@ router.get(
             birth: user.birth,
             api_key: user.api_key,
             auth: user.auth,
-            git_url: user.git_url
-          }
+            git_url: user.git_url,
+          },
         });
       else return res.status(401).json({ msg: status.UNAUTH });
     } else {
@@ -45,10 +45,18 @@ router.post("/", async (req, res) => {
     password = null,
     name = null,
     birth = null,
-    auth = null
+    auth = 1,
   } = req.body;
-  if (!email || !password || !name || !birth || !auth)
+  if (!email || !password || !name || !birth)
     return res.json({ msg: status.INVALIDREQ });
+
+  const checkUser = await User.findOne({
+    where: {
+      email,
+    },
+  });
+
+  if (checkUser) return res.status(409).json({ msg: "already user" });
 
   const user = await User.create({ email, password, name, birth, auth });
 
@@ -75,8 +83,8 @@ router.patch(
             birth: updated.birth,
             api_key: updated.api_key,
             auth: updated.auth,
-            git_url: updated.git_url
-          }
+            git_url: updated.git_url,
+          },
         });
         //return res.status(200).json({ data: updated });
       } else {

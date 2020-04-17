@@ -1,8 +1,37 @@
 import bcrypt from "bcrypt";
 import sharp from "sharp";
 import fs from "fs";
+import { adjective, nouns } from "./words";
+import nodemailer from "nodemailer";
 
-export const makeHash = password => {
+const sendMail = (email) => {
+  const options = {
+    service: "naver",
+    auth: {
+      user: "jiuk205@naver.com",
+      pass: "poeing9402",
+    },
+  };
+  const mailer = nodemailer.createTransport(options);
+  console.log(mailer);
+  return mailer.sendMail(email);
+};
+
+export const sendSecretMail = (address, secret) => {
+  console.log(address, secret);
+  const email = {
+    from: "jiuk205@naver.com",
+    to: address,
+    subject: "[Stack Me] 가입 인증 메일",
+    html: `안녕하세요, Stack Me 입니다! <br/>
+      가입 인증 코드는 <br/>
+      <b style="font-size:18px;">${secret}</b><br/> 
+      입니다.`,
+  };
+  return sendMail(email);
+};
+
+export const makeHash = (password) => {
   if (!password) return false;
 
   const salt = bcrypt.genSaltSync(10);
@@ -34,30 +63,28 @@ export const makeThumnail = (images, id) => {
   const thumPath = `public/thumnail/${id}${ext}`;
 
   fs.copyFileSync(useImage, thumPath);
-  sharp(useImage)
-    .resize({ width: 300 })
-    .toFile(thumPath);
+  sharp(useImage).resize({ width: 300 }).toFile(thumPath);
   return `${id}${ext}`;
 };
 
-export const getProjectImages = content => {
+export const getProjectImages = (content) => {
   return content.match(/src=".+?"/g);
 };
 
-export const replaceProjectImages = content => {
+export const replaceProjectImages = (content) => {
   return content.replace(`src="public/imageTemp`, `src="public/projectImage`);
 };
 
-export const setProjectImage = images => {
+export const setProjectImage = (images) => {
   if (!images) return;
 
-  const replaceImages = images.map(image =>
+  const replaceImages = images.map((image) =>
     image.replace(/src=/gi, "").replace(/"/gi, "")
   );
 
   const setImages = [];
 
-  replaceImages.forEach(image => {
+  replaceImages.forEach((image) => {
     const movedPath = image.replace("public/imageTemp", "public/projectImage");
     fs.renameSync(image, movedPath);
     setImages.push(movedPath);
@@ -99,6 +126,11 @@ export const genPagination = (page, perPage, totalCount) => {
     page,
     totalPage,
     nowGroupStartPage,
-    nowGroupEndPage
+    nowGroupEndPage,
   };
+};
+
+export const generatorSecret = () => {
+  const randomNumber = Math.floor(Math.random() * adjective.length);
+  return `${adjective[randomNumber]} ${nouns[randomNumber]}`;
 };

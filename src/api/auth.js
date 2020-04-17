@@ -2,6 +2,8 @@ import express from "express";
 import User from "../../models/User";
 import jwt from "jsonwebtoken";
 import status from "../../utils/statusStr";
+import Verify from "../../models/Verify";
+import { generatorSecret, sendSecretMail } from "../../utils/utils";
 
 const Router = express.Router();
 
@@ -37,6 +39,36 @@ Router.post("/signup", async (req, res) => {
   const user = await User.create({ email, password, name, birth });
 
   return res.status(200).json({ data: user });
+});
+
+Router.post("/verify/check", async (req, res) => {
+  const { email, code } = req.body;
+
+  const verifyTarget = await Verify.findOne({ where: { email } });
+
+  if (!verifyTarget) return res.status(404).json({ msg: status.INVALIDREQ });
+
+  if (verifyTarget.code === code)
+    return res.status(200).json({ msg: "SUCCESS" });
+  else return res.status(401).json({ msg: "FAIL" });
+});
+
+Router.post("/verify", async (req, res) => {
+  const { email } = req.body;
+  const user = await User.findOne({ where: { email } });
+
+  if (user) return res.status(409).json({ msg: status.ALREADYDATA });
+
+  const secretKey = generatorSecret();
+
+  const verify = await Verify.findOne({ where: { email } });
+  if (verify) {
+    verify.update({ code: secretKey }, { email });
+  } else {
+    Verify.create({ email, code: secretKey });
+  }
+  sendSecretMail(email, secretKey);
+  return res.status(200).json({ msg: "SUCCESS" });
 });
 
 export default Router;

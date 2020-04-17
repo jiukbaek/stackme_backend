@@ -4,6 +4,7 @@ import User from "./User";
 import Project from "./Project";
 import Career from "./Career";
 import Skill from "./Skill";
+import Verify from "./Verify";
 require("dotenv").config();
 
 export const init = () => {
@@ -16,7 +17,7 @@ export const init = () => {
     {
       dialect: dbConfig.dialect,
       host: dbConfig.host,
-      port: dbConfig.port
+      port: dbConfig.port,
     }
   );
 
@@ -24,10 +25,11 @@ export const init = () => {
   Project.init(sequelize);
   Career.init(sequelize);
   Skill.init(sequelize);
+  Verify.init(sequelize);
 
   Project.belongsTo(User, {
     foreignKey: "user_id",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   });
 
   // User.hasMany(Project, {
@@ -37,7 +39,7 @@ export const init = () => {
 
   Career.belongsTo(User, {
     foreignKey: "user_id",
-    onDelete: "CASCADE"
+    onDelete: "CASCADE",
   });
 
   return sequelize;
