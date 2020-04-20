@@ -7,7 +7,7 @@ import {
   setProjectImage,
   makeThumnail,
   replaceProjectImages,
-  genPagination
+  genPagination,
 } from "../../utils/utils";
 import passport from "../../utils/passport";
 import status from "../../utils/statusStr";
@@ -26,10 +26,8 @@ router.get(
       perPage = 10,
       q = "",
       skills = "",
-      showing = false
+      showing = false,
     } = req.query;
-
-    console.log(showing);
 
     const where = {};
 
@@ -58,7 +56,7 @@ router.get(
 
     const projects = await Project.findAll({
       where,
-      include: [{ model: User, attributes: ["name"] }]
+      include: [{ model: User, attributes: ["name"] }],
     });
 
     const pagenation = genPagination(page, perPage, projects.length);
@@ -68,7 +66,7 @@ router.get(
 
     return res.status(200).json({
       data: projects.slice(pagenation.startRowNum - 1, pagenation.endRowNum),
-      pagenation
+      pagenation,
     });
   }
 );
@@ -77,10 +75,10 @@ router.get("/random", async (req, res) => {
   const { number = 10 } = req.query;
   const projects = await Project.findAll({
     where: {
-      showing: "Y"
+      showing: "Y",
     },
     order: [[Sequelize.fn("RAND")]],
-    limit: parseInt(number)
+    limit: parseInt(number),
   });
 
   if (projects) {
@@ -98,7 +96,7 @@ router.get(
     const { id } = req.params;
     const project = await Project.findOne({
       where: { id },
-      include: [{ model: User, attributes: ["name"] }]
+      include: [{ model: User, attributes: ["name"] }],
     });
 
     if (project) {
@@ -127,7 +125,7 @@ router.post(
       git_url = null,
       showing = null,
       start_date = null,
-      end_date = null
+      end_date = null,
     } = req.body;
 
     if (!type || !title || !content || !skills)
@@ -147,7 +145,7 @@ router.post(
       git_url,
       showing,
       start_date,
-      end_date
+      end_date,
     });
 
     const thumnail = makeThumnail(setImages, project.id);

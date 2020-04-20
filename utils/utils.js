@@ -13,12 +13,10 @@ const sendMail = (email) => {
     },
   };
   const mailer = nodemailer.createTransport(options);
-  console.log(mailer);
   return mailer.sendMail(email);
 };
 
 export const sendSecretMail = (address, secret) => {
-  console.log(address, secret);
   const email = {
     from: "jiuk205@naver.com",
     to: address,
@@ -72,14 +70,14 @@ export const getProjectImages = (content) => {
 };
 
 export const replaceProjectImages = (content) => {
-  return content.replace(`src="public/imageTemp`, `src="public/projectImage`);
+  return content.replace(`src="/public/imageTemp`, `src="/public/projectImage`);
 };
 
 export const setProjectImage = (images) => {
   if (!images) return;
 
   const replaceImages = images.map((image) =>
-    image.replace(/src=/gi, "").replace(/"/gi, "")
+    image.replace(/src=/gi, "").replace(/"/gi, "").substr(1)
   );
 
   const setImages = [];
