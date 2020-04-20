@@ -8,14 +8,14 @@ export default class Skill extends Model {
           type: DataTypes.INTEGER.UNSIGNED,
           autoIncrement: true,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         skill: {
           type: DataTypes.STRING(500),
-          allowNull: false
-        }
+          allowNull: false,
+        },
       },
-      { sequelize, charset: "utf8" }
+      { sequelize, charset: "utf8", timestamps: false }
     );
   }
 }
