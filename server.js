@@ -37,7 +37,7 @@ server.post("/uploads/images", uploader.single("upload"), (req, res) => {
   });
 });
 
-const port = 80;
+const port = 3000;
 
 if (process.env.NODE_ENV !== "test") {
   const sequelize = DB.init();
