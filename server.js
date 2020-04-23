@@ -12,7 +12,7 @@ import Career from "./models/Career";
 
 const _storage = multer.diskStorage({
   destination: function (req, file, cb) {
-    cb(null, "public/imageTemp");
+    cb(null, "static/public/imageTemp");
   },
   filename: function (req, file, cb) {
     const { user } = req.query;
@@ -26,8 +26,6 @@ const server = express();
 server.use(express.json());
 setRouter(server);
 server.use(express.static(path.join(__dirname, "dist")));
-server.use("/public", express.static(path.join(__dirname, "public")));
-server.use("/config", express.static(path.join(__dirname, "config")));
 server.use("/static", express.static(path.join(__dirname, "static")));
 server.post("/uploads/images", uploader.single("upload"), (req, res) => {
   return res.json({
@@ -37,7 +35,7 @@ server.post("/uploads/images", uploader.single("upload"), (req, res) => {
   });
 });
 
-const port = 3000;
+const port = process.env.PORT ? process.env.PORT : 3000;
 
 if (process.env.NODE_ENV !== "test") {
   const sequelize = DB.init();

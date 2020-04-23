@@ -66,7 +66,13 @@ Router.post("/verify", async (req, res) => {
   } else {
     Verify.create({ email, code: secretKey });
   }
-  sendSecretMail(email, secretKey);
+
+  try {
+    sendSecretMail(email, secretKey);
+  } catch (e) {
+    console.log(e);
+  }
+
   return res.status(200).json({ msg: "SUCCESS" });
 });
 

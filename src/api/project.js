@@ -57,6 +57,7 @@ router.get(
     const projects = await Project.findAll({
       where,
       include: [{ model: User, attributes: ["name"] }],
+      order: [["createdAt", "DESC"]],
     });
 
     const pagenation = genPagination(page, perPage, projects.length);

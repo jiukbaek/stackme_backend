@@ -1,5 +1,5 @@
 import { Sequelize } from "sequelize";
-import config from "../config/config.json";
+import config from "../static/config/config.json";
 import User from "./User";
 import Project from "./Project";
 import Career from "./Career";

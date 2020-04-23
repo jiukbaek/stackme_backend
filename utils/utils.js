@@ -58,7 +58,7 @@ export const makeThumnail = (images, id) => {
 
   const useImage = images[0];
   const ext = useImage.substring(useImage.lastIndexOf("."), useImage.length);
-  const thumPath = `public/thumnail/${id}${ext}`;
+  const thumPath = `static/public/thumnail/${id}${ext}`;
 
   fs.copyFileSync(useImage, thumPath);
   sharp(useImage).resize({ width: 300 }).toFile(thumPath);
@@ -70,7 +70,10 @@ export const getProjectImages = (content) => {
 };
 
 export const replaceProjectImages = (content) => {
-  return content.replace(`src="/public/imageTemp`, `src="/public/projectImage`);
+  return content.replace(
+    `src="/static/public/imageTemp`,
+    `src="/static/public/projectImage`
+  );
 };
 
 export const setProjectImage = (images) => {
@@ -83,7 +86,10 @@ export const setProjectImage = (images) => {
   const setImages = [];
 
   replaceImages.forEach((image) => {
-    const movedPath = image.replace("public/imageTemp", "public/projectImage");
+    const movedPath = image.replace(
+      "/static/public/imageTemp",
+      "/static/public/projectImage"
+    );
     fs.renameSync(image, movedPath);
     setImages.push(movedPath);
   });
@@ -103,10 +109,7 @@ export const genPagination = (page, perPage, totalCount) => {
     totalCount % perPage > 0
       ? parseInt(totalCount / perPage) + 1
       : parseInt(totalCount / perPage);
-  // const totalGroup =
-  //   totalPage % groupPerPage > 0
-  //     ? totalPage / groupPerPage + 1
-  //     : totalPage / groupPerPage;
+
   const nowPageGroup =
     page % groupPerPage > 0
       ? parseInt(page / groupPerPage) + 1
