@@ -17,7 +17,6 @@ export default class Verify extends Model {
       },
       {
         sequelize,
-        charset: "utf8",
       }
     );
   }

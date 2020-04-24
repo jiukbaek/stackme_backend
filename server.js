@@ -5,11 +5,6 @@ import multer from "multer";
 
 import { setRouter } from "./src/";
 
-import User from "./models/User";
-import Skill from "./models/Skill";
-import Project from "./models/Project";
-import Career from "./models/Career";
-
 const _storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "static/public/imageTemp");
@@ -43,7 +38,7 @@ if (process.env.NODE_ENV !== "test") {
     (async () => {
       await sequelize.authenticate();
       await sequelize.sync({
-        force: false,
+        force: true,
       });
     })();
   } catch (e) {

@@ -16,6 +16,12 @@ export const init = () => {
     dbConfig.password,
     {
       dialect: dbConfig.dialect,
+      define: {
+        charset: "utf8mb4",
+        dialectOptions: {
+          collate: "utf8mb4_general_ci",
+        },
+      },
       host: dbConfig.host,
       port: dbConfig.port,
     }
@@ -41,6 +47,8 @@ export const init = () => {
     foreignKey: "user_id",
     onDelete: "CASCADE",
   });
+
+  console.log(sequelize.dialectOptions);
 
   return sequelize;
 };

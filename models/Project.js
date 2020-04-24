@@ -8,56 +8,55 @@ export default class Project extends Model {
           type: DataTypes.INTEGER.UNSIGNED,
           autoIncrement: true,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         user_id: {
           type: DataTypes.INTEGER.UNSIGNED,
-          allowNull: false
+          allowNull: false,
         },
         type: {
           type: DataTypes.STRING(100),
-          allowNull: false
+          allowNull: false,
         },
         thumnail: {
           type: DataTypes.STRING(100),
-          allowNull: true
+          allowNull: true,
         },
         title: {
           type: DataTypes.STRING(100),
-          allowNull: false
+          allowNull: false,
         },
         content: {
           type: DataTypes.TEXT,
-          allowNull: false
+          allowNull: false,
         },
         skills: {
           type: DataTypes.STRING(1000),
-          allowNull: false
+          allowNull: false,
         },
         url: {
           type: DataTypes.STRING(100),
-          allowNull: true
+          allowNull: true,
         },
         git_url: {
           type: DataTypes.STRING(100),
-          allowNull: true
+          allowNull: true,
         },
         showing: {
           type: DataTypes.STRING(2),
-          allowNull: false
+          allowNull: false,
         },
         start_date: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: false,
         },
         end_date: {
           type: DataTypes.DATEONLY,
-          allowNull: true
-        }
+          allowNull: true,
+        },
       },
       {
         sequelize,
-        charset: "utf8"
       }
     );
   }

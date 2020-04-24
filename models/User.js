@@ -10,39 +10,38 @@ export default class User extends Model {
           type: DataTypes.INTEGER.UNSIGNED,
           autoIncrement: true,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         email: {
           type: DataTypes.STRING(50),
           unique: true,
-          allowNull: false
+          allowNull: false,
         },
         password: {
           type: DataTypes.STRING(500),
-          allowNull: false
+          allowNull: false,
         },
         name: { type: DataTypes.STRING(50), allowNull: false },
         birth: { type: DataTypes.STRING(20), allowNull: false },
         api_key: { type: DataTypes.STRING(500), allowNull: true },
         auth: {
           type: DataTypes.INTEGER.UNSIGNED,
-          allowNull: false
+          allowNull: false,
         },
         git_url: {
           type: DataTypes.STRING(100),
-          allowNull: true
-        }
+          allowNull: true,
+        },
       },
       {
         sequelize,
-        charset: "utf8",
         indexes: [{ fields: ["email"] }],
         hooks: {
-          beforeCreate: user => {
+          beforeCreate: (user) => {
             user.password = makeHash(user.password);
             user.api_key = genApiKey();
-          }
-        }
+          },
+        },
       }
     );
   }

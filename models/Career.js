@@ -8,32 +8,31 @@ export default class Career extends Model {
           type: DataTypes.INTEGER.UNSIGNED,
           autoIncrement: true,
           primaryKey: true,
-          allowNull: false
+          allowNull: false,
         },
         user_id: {
           type: DataTypes.INTEGER.UNSIGNED,
-          allowNull: false
+          allowNull: false,
         },
         join_date: {
           type: DataTypes.DATEONLY,
-          allowNull: false
+          allowNull: false,
         },
         end_date: {
           type: DataTypes.DATEONLY,
-          allowNull: true
+          allowNull: true,
         },
         company: {
           type: DataTypes.STRING(500),
-          allowNull: false
+          allowNull: false,
         },
         duty: {
           type: DataTypes.TEXT,
-          allowNull: false
-        }
+          allowNull: false,
+        },
       },
       {
         sequelize,
-        charset: "utf8"
       }
     );
   }

@@ -15,7 +15,7 @@ export default class Skill extends Model {
           allowNull: false,
         },
       },
-      { sequelize, charset: "utf8", timestamps: false }
+      { sequelize, timestamps: false }
     );
   }
 }
