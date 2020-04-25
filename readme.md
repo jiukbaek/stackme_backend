@@ -12,12 +12,15 @@ https://stackme.co.kr<br/>
   
 ### Server
 * Node(Express)
-* Webpack
-* Babel
 * MySQL
 * Sequelize
+
+### DevOps
+* Webpack
+* Babel
 * AWS EC2
 * Docker
+
 
 ## 특징
  * JWT를 이용한 로그인 처리
