@@ -23,5 +23,6 @@ https://stackme.co.kr<br/>
 
 
 ## 특징
- * JWT를 이용한 로그인 처리
- * Express middleware를 통한 API_KEY 처리
+ * bcrypt를 이용한 유저 패스워드 해쉬 처리
+ * jwt, passport.js를 이용한 로그인 처리
+ 
