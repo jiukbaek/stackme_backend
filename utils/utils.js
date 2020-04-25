@@ -71,8 +71,8 @@ export const getProjectImages = (content) => {
 
 export const replaceProjectImages = (content) => {
   return content.replace(
-    `src="/static/public/imageTemp`,
-    `src="/static/public/projectImage`
+    /\/static\/public\/imageTemp/gi,
+    "/static/public/projectImage"
   );
 };
 
@@ -93,7 +93,6 @@ export const setProjectImage = (images) => {
     fs.renameSync(image, movedPath);
     setImages.push(movedPath);
   });
-  console.log(setImages);
   return setImages;
 };
 
