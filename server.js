@@ -38,7 +38,7 @@ if (process.env.NODE_ENV !== "test") {
     (async () => {
       await sequelize.authenticate();
       await sequelize.sync({
-        force: true,
+        force: false,
       });
     })();
   } catch (e) {

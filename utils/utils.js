@@ -87,13 +87,13 @@ export const setProjectImage = (images) => {
 
   replaceImages.forEach((image) => {
     const movedPath = image.replace(
-      "/static/public/imageTemp",
-      "/static/public/projectImage"
+      "static/public/imageTemp",
+      "static/public/projectImage"
     );
     fs.renameSync(image, movedPath);
     setImages.push(movedPath);
   });
-
+  console.log(setImages);
   return setImages;
 };
 
