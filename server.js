@@ -41,9 +41,7 @@ if (process.env.NODE_ENV !== "test") {
         force: false,
       });
     })();
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 
   server.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, "dist/index.html"));

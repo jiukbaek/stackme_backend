@@ -10,7 +10,7 @@ router.get("/", async (req, res) => {
 
   const careers = await Career.findAll({
     where: { user_id },
-    order: [["id", "DESC"]]
+    order: [["id", "DESC"]],
   });
 
   if (careers) {
@@ -42,9 +42,9 @@ router.post("/", async (req, res) => {
     join_date = null,
     end_date = null,
     company = null,
-    duty = null
+    duty = null,
   } = req.body;
-  console.log(req.body);
+
   if (!join_date || !company || !duty)
     return res.status(404).json({ msg: status.INVALIDREQ });
 
@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
     join_date,
     end_date,
     company,
-    duty
+    duty,
   });
 
   return res.status(200).json({ data: career });

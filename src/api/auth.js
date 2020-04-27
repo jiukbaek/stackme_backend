@@ -69,9 +69,7 @@ Router.post("/verify", async (req, res) => {
 
   try {
     sendSecretMail(email, secretKey);
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 
   return res.status(200).json({ msg: "SUCCESS" });
 });

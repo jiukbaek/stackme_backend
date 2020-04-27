@@ -48,7 +48,5 @@ export const init = () => {
     onDelete: "CASCADE",
   });
 
-  console.log(sequelize.dialectOptions);
-
   return sequelize;
 };

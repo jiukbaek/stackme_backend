@@ -3,27 +3,25 @@ import User from "../../models/User";
 import Career from "../../models/Career";
 import Project from "../../models/Project";
 import status from "../../utils/statusStr";
+import Skill from "../../models/Skill";
+import { Op } from "sequelize";
 
 const Router = express.Router();
 
 Router.use("/", async (req, res, next) => {
   const { api_key = null } = req.headers;
 
-  if (!api_key) res.status(400).json({ msg: status.INVALIDREQ });
+  if (!api_key) return res.status(400).json({ msg: status.INVALIDREQ });
 
   const user = await User.findOne({ where: { api_key } });
 
-  if (!user) res.status(400).json({ msg: status.INVALIDREQ });
+  if (!user) return res.status(400).json({ msg: status.INVALIDREQ });
   else req.user = user;
 
   next();
 });
 
-Router.get("/", (req, res) => {
-  return res.status(200).json({ data: req.user });
-});
-
-Router.get("/projects", async (req, res) => {
+Router.get("/project", async (req, res) => {
   const { user } = req;
   const { fields = null } = req.query;
 
@@ -36,7 +34,42 @@ Router.get("/projects", async (req, res) => {
   else res.status(404).json({ msg: status.NODATA });
 });
 
-Router.get("/careers", async (req, res) => {
+Router.get("/project/:id", async (req, res) => {
+  const { user } = req;
+  const { fields = null } = req.query;
+  const { id } = req.params;
+
+  const project = await Project.findOne({
+    where: { id },
+    attributes: fields ? fields.split(",") : null,
+  });
+
+  if (!project) res.status(404).json({ msg: status.NODATA });
+
+  if (project.user_id === user.id) {
+    const skills = await Skill.findAll({
+      where: {
+        id: {
+          [Op.in]: project.skills.split(","),
+        },
+      },
+      attributes: ["skill"],
+    });
+
+    const skillArr = skills.map((skill) => skill.skill);
+
+    project.content = project.content.replace(
+      /\/static\/public/gi,
+      "https://stackme.co.kr/static/public"
+    );
+
+    project.skills = skillArr;
+
+    return res.status(200).json({ data: project });
+  } else return res.status(401).json({ data: status.UNAUTH });
+});
+
+Router.get("/career", async (req, res) => {
   const { user } = req;
   const { fields = null } = req.query;
 
