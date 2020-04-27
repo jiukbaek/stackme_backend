@@ -2,6 +2,7 @@ import express from "express";
 import * as DB from "./models/index";
 import path from "path";
 import multer from "multer";
+import favicon from "serve-favicon";
 
 import { setRouter } from "./src/";
 
@@ -18,6 +19,7 @@ const uploader = multer({ storage: _storage });
 
 const server = express();
 
+server.use(favicon("static/image/favicon.ico"));
 server.use(express.json());
 setRouter(server);
 server.use(express.static(path.join(__dirname, "dist")));
