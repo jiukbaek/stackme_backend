@@ -72,6 +72,7 @@ Router.get("/project/:id", async (req, res) => {
       "https://stackme.co.kr/static/public"
     );
 
+    project.type = getProjectType(project.type);
     project.skills = skillArr;
 
     return res.status(200).json({ data: project });
