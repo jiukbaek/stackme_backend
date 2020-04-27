@@ -4,6 +4,7 @@ import Career from "../../models/Career";
 import Project from "../../models/Project";
 import status from "../../utils/statusStr";
 import Skill from "../../models/Skill";
+import { getProjectType } from "../../utils/utils";
 import { Op } from "sequelize";
 
 const Router = express.Router();
@@ -25,13 +26,21 @@ Router.get("/project", async (req, res) => {
   const { user } = req;
   const { fields = null } = req.query;
 
-  const project = await Project.findAll({
+  const result = await Project.findAll({
     where: { user_id: user.id },
     attributes: fields ? fields.split(",") : null,
   });
 
-  if (project) res.status(200).json({ data: project });
-  else res.status(404).json({ msg: status.NODATA });
+  if (!result) res.status(404).json({ msg: status.NODATA });
+
+  const projects = result.map((project) => {
+    project.type = getProjectType(project.type);
+    project.thumnail = `https://stackme.co.kr/static/public/thumnail/${project.thumnail}`;
+    return project;
+  });
+
+  console.log(projects);
+  return res.status(200).json({ data: projects });
 });
 
 Router.get("/project/:id", async (req, res) => {
